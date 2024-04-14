@@ -1,5 +1,6 @@
 ﻿using Hotcakes.CommerceDTO.v1;
 using Hotcakes.CommerceDTO.v1.Client;
+using Hotcakes.CommerceDTO.v1.Contacts;
 using Hotcakes.CommerceDTO.v1.Membership;
 using System;
 using System.Collections.Generic;
@@ -30,10 +31,17 @@ namespace api2
             // call the API to find all customer accounts in the store
             ApiResponse<List<CustomerAccountDTO>> response = proxy.CustomerAccountsFindAll();
             //MessageBox.Show(response.Content[0].FirstName.ToString());
-            //listBox1.DataSource = response.Content;
-            dataGridView1.DataSource = response.Content;
+            //dataGridView1.DataSource = response.Content;
+            addressDTOBindingSource.DataSource = response.Content;
+            
             
 
+        }
+
+        private void buttonorders_Click(object sender, EventArgs e)
+        {
+            Form2 form2 = new Form2();
+            form2.ShowDialog();
         }
     }
 }
