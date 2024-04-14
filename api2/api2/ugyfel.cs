@@ -12,6 +12,8 @@ namespace api2
         public string vezeteknev { get; set; }
         public string keresztnev { get; set; }
         public string email { get; set; }
+        public string cim {  get; set; }
+        public string telepules { get; set; }
         
     }
 }
