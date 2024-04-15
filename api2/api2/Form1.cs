@@ -112,34 +112,30 @@ namespace api2
                 Form3 editform = new Form3();
                 editform.LoadContact(new ugyfel
                 {
+
                     azonosito = int.Parse((dataGridView1.Rows[e.RowIndex].Cells[0]).Value.ToString()),
                     vezeteknev = dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString(),
                     keresztnev = dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString(),
                     email = dataGridView1.Rows[e.RowIndex].Cells[3].Value.ToString(),
                     telepules = dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString(),
                     cim = dataGridView1.Rows[e.RowIndex].Cells[5].Value.ToString(),
-                    
 
                 });
                 if (editform.ShowDialog() == DialogResult.OK)
                 {
 
-                    string url = "http://20.234.113.211:8109";
-                    string key = "1-a284d681-f356-4b49-a347-eb274e0217e8";
-
-                    Api proxy = new Api(url, key);
-                    var customerID = dataGridView1.Rows[e.RowIndex].Cells[0].ToString();
-
-                    ApiResponse<CustomerAccountDTO> customerResponse = proxy.CustomerAccountsFind(customerID);
-
                     
+                    string customerID = dataGridView1.Rows[e.RowIndex].Cells[0].ToString();
+
+                    ApiResponse<CustomerAccountDTO> customerResponse = apihivas().CustomerAccountsFind(customerID);
+                   
                     customerResponse.Content.LastName = editform.textBoxLast.Text;
                     customerResponse.Content.FirstName = editform.textBoxFirst.Text;
                     customerResponse.Content.Email = editform.textBoxEmail.Text;
                     customerResponse.Content.BillingAddress.Line1 = editform.textBoxAddress.Text;
-                    customerResponse.Content.BillingAddress.City= editform.textBoxCity.Text;
+                    customerResponse.Content.BillingAddress.City = editform.textBoxCity.Text;
 
-                    ApiResponse<CustomerAccountDTO> response = proxy.CustomerAccountsUpdate(customerResponse.Content);
+                    ApiResponse<CustomerAccountDTO> response = apihivas().CustomerAccountsUpdate(customerResponse.Content);
 
                     apiadatlekeres();
                 }

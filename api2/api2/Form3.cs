@@ -20,21 +20,6 @@ namespace api2
         public Form3()
         {
             InitializeComponent();
-            //string url = "http://20.234.113.211:8109";
-            //string key = "1-a284d681-f356-4b49-a347-eb274e0217e8";
-
-            //Api proxy = new Api(url, key);
-
-            //// create a new instance of customer account
-            //var customerAccount = new CustomerAccountDTO();
-
-            //// populate the customer account with minimum details
-            //customerAccount.FirstName = "Bruce";
-            //customerAccount.LastName = "Wayne";
-            //customerAccount.Email = "batman@domain.com";
-
-            //// call the API to create the account
-            //ApiResponse<CustomerAccountDTO> response = proxy.CustomerAccountsCreate(customerAccount);
         }
 
         private void buttonOK_Click(object sender, EventArgs e)
