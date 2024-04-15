@@ -16,18 +16,16 @@ namespace api2
 {
     public partial class Form1 : Form
     {
+
         public Form1()
         {
             InitializeComponent();
-            api();
+            apiadatlekeres();
 
         }
-        void api()
+        void apiadatlekeres()
         {
-            string url = "http://20.234.113.211:8109";
-            string key = "1-a284d681-f356-4b49-a347-eb274e0217e8";
-
-            Api proxy = new Api(url, key);
+            Api proxy = apihivas();
 
             // call the API to find all customer accounts in the store
             ApiResponse<List<CustomerAccountDTO>> response = proxy.CustomerAccountsFindAll();
@@ -55,6 +53,15 @@ namespace api2
 
         }
 
+        private static Api apihivas()
+        {
+            string url = "http://20.234.113.211:8109";
+            string key = "1-a284d681-f356-4b49-a347-eb274e0217e8";
+
+            Api proxy = new Api(url, key);
+            return proxy;
+        }
+
         private void buttonorders_Click(object sender, EventArgs e)
         {
             Form2 form2 = new Form2();
@@ -63,8 +70,8 @@ namespace api2
 
         private void buttonaddcontact_Click(object sender, EventArgs e)
         {
-            Form3 form3 = new Form3();
-            if (form3.ShowDialog() == DialogResult.OK)
+            Form3 addform = new Form3();
+            if (addform.ShowDialog() == DialogResult.OK)
             {
                 string url = "http://20.234.113.211:8109";
                 string key = "1-a284d681-f356-4b49-a347-eb274e0217e8";
@@ -75,11 +82,11 @@ namespace api2
                 var customerAccount = new CustomerAccountDTO();
 
                 // populate the customer account with minimum details
-                customerAccount.FirstName = form3.textBoxFirst.Text;
-                customerAccount.LastName = form3.textBoxLast.Text;
-                customerAccount.Email = form3.textBoxEmail.Text;
-                customerAccount.BillingAddress.City = form3.textBoxCity.Text;
-                customerAccount.BillingAddress.Line1 = form3.textBoxAddress.Text;
+                customerAccount.FirstName = addform.textBoxFirst.Text;
+                customerAccount.LastName = addform.textBoxLast.Text;
+                customerAccount.Email = addform.textBoxEmail.Text;
+                customerAccount.BillingAddress.City = addform.textBoxCity.Text;
+                customerAccount.BillingAddress.Line1 = addform.textBoxAddress.Text;
 
                 // call the API to create the account
                 try
@@ -91,9 +98,52 @@ namespace api2
                     MessageBox.Show(ex.Message);
                 }
                 
-                api();
+                apiadatlekeres();
             }
 
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            DataGridViewLinkCell cell = (DataGridViewLinkCell)dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex];
+
+            if (cell.Value.ToString() == "Szerkesztés")
+            {
+                Form3 editform = new Form3();
+                editform.LoadContact(new ugyfel
+                {
+                    azonosito = int.Parse((dataGridView1.Rows[e.RowIndex].Cells[0]).Value.ToString()),
+                    vezeteknev = dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString(),
+                    keresztnev = dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString(),
+                    email = dataGridView1.Rows[e.RowIndex].Cells[3].Value.ToString(),
+                    telepules = dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString(),
+                    cim = dataGridView1.Rows[e.RowIndex].Cells[5].Value.ToString(),
+                    
+
+                });
+                if (editform.ShowDialog() == DialogResult.OK)
+                {
+
+                    string url = "http://20.234.113.211:8109";
+                    string key = "1-a284d681-f356-4b49-a347-eb274e0217e8";
+
+                    Api proxy = new Api(url, key);
+                    var customerID = dataGridView1.Rows[e.RowIndex].Cells[0].ToString();
+
+                    ApiResponse<CustomerAccountDTO> customerResponse = proxy.CustomerAccountsFind(customerID);
+
+                    
+                    customerResponse.Content.LastName = editform.textBoxLast.Text;
+                    customerResponse.Content.FirstName = editform.textBoxFirst.Text;
+                    customerResponse.Content.Email = editform.textBoxEmail.Text;
+                    customerResponse.Content.BillingAddress.Line1 = editform.textBoxAddress.Text;
+                    customerResponse.Content.BillingAddress.City= editform.textBoxCity.Text;
+
+                    ApiResponse<CustomerAccountDTO> response = proxy.CustomerAccountsUpdate(customerResponse.Content);
+
+                    apiadatlekeres();
+                }
+            }
         }
     }
 }
