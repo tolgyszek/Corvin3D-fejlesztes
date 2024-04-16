@@ -124,17 +124,20 @@ namespace api2
                 if (editform.ShowDialog() == DialogResult.OK)
                 {
 
-                    
+                    //szerkesztett ügyfél azonosítójának mentése
                     string customerID = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
 
+                    //ügyfélszerkesztő API endpoint hívása
                     ApiResponse<CustomerAccountDTO> customerResponse = apihivas().CustomerAccountsFind(customerID);
 
+                    //Ügyfél adatainak szerkesztése a szerkesztő form-on megadott adatokkal
                     customerResponse.Content.LastName = editform.textBoxLast.Text;
                     customerResponse.Content.FirstName = editform.textBoxFirst.Text;
                     customerResponse.Content.Email = editform.textBoxEmail.Text;
                     customerResponse.Content.BillingAddress.Line1 = editform.textBoxAddress.Text;
                     customerResponse.Content.BillingAddress.City = editform.textBoxCity.Text;
 
+                    //mentés
                     try
                     {
                         ApiResponse<CustomerAccountDTO> response = apihivas().CustomerAccountsUpdate(customerResponse.Content);
