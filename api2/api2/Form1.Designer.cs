@@ -32,6 +32,9 @@
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.addressDTOBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.buttonorders = new System.Windows.Forms.Button();
+            this.buttonaddcontact = new System.Windows.Forms.Button();
+            this.Szerkesztes = new System.Windows.Forms.DataGridViewLinkColumn();
+            this.delete = new System.Windows.Forms.DataGridViewLinkColumn();
             this.azonositoDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.vezeteknevDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.keresztnevDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -39,7 +42,8 @@
             this.telepulesDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cimDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ugyfelBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.buttonaddcontact = new System.Windows.Forms.Button();
+            this.textBoxSearch = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.addressDTOBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ugyfelBindingSource)).BeginInit();
@@ -48,6 +52,7 @@
             // dataGridView1
             // 
             this.dataGridView1.AutoGenerateColumns = false;
+            this.dataGridView1.BackgroundColor = System.Drawing.Color.MediumPurple;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.azonositoDataGridViewTextBoxColumn,
@@ -55,12 +60,15 @@
             this.keresztnevDataGridViewTextBoxColumn,
             this.emailDataGridViewTextBoxColumn,
             this.telepulesDataGridViewTextBoxColumn,
-            this.cimDataGridViewTextBoxColumn});
+            this.cimDataGridViewTextBoxColumn,
+            this.Szerkesztes,
+            this.delete});
             this.dataGridView1.DataSource = this.ugyfelBindingSource;
             this.dataGridView1.Location = new System.Drawing.Point(12, 54);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(844, 482);
             this.dataGridView1.TabIndex = 0;
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // addressDTOBindingSource
             // 
@@ -75,6 +83,35 @@
             this.buttonorders.Text = "Rendelések";
             this.buttonorders.UseVisualStyleBackColor = true;
             this.buttonorders.Click += new System.EventHandler(this.buttonorders_Click);
+            // 
+            // buttonaddcontact
+            // 
+            this.buttonaddcontact.BackColor = System.Drawing.Color.MediumPurple;
+            this.buttonaddcontact.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.buttonaddcontact.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.buttonaddcontact.Location = new System.Drawing.Point(759, 12);
+            this.buttonaddcontact.Name = "buttonaddcontact";
+            this.buttonaddcontact.Size = new System.Drawing.Size(97, 36);
+            this.buttonaddcontact.TabIndex = 2;
+            this.buttonaddcontact.Text = "Új ügyfél";
+            this.buttonaddcontact.UseVisualStyleBackColor = false;
+            this.buttonaddcontact.Click += new System.EventHandler(this.buttonaddcontact_Click);
+            // 
+            // Szerkesztes
+            // 
+            this.Szerkesztes.HeaderText = "Szerkesztés";
+            this.Szerkesztes.Name = "Szerkesztes";
+            this.Szerkesztes.ReadOnly = true;
+            this.Szerkesztes.Text = "Szerkesztés";
+            this.Szerkesztes.UseColumnTextForLinkValue = true;
+            // 
+            // delete
+            // 
+            this.delete.HeaderText = "Törlés";
+            this.delete.Name = "delete";
+            this.delete.ReadOnly = true;
+            this.delete.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.delete.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // azonositoDataGridViewTextBoxColumn
             // 
@@ -116,21 +153,33 @@
             // 
             this.ugyfelBindingSource.DataSource = typeof(api2.ugyfel);
             // 
-            // buttonaddcontact
+            // textBoxSearch
             // 
-            this.buttonaddcontact.Location = new System.Drawing.Point(781, 12);
-            this.buttonaddcontact.Name = "buttonaddcontact";
-            this.buttonaddcontact.Size = new System.Drawing.Size(75, 23);
-            this.buttonaddcontact.TabIndex = 2;
-            this.buttonaddcontact.Text = "Új ügyfél";
-            this.buttonaddcontact.UseVisualStyleBackColor = true;
-            this.buttonaddcontact.Click += new System.EventHandler(this.buttonaddcontact_Click);
+            this.textBoxSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.textBoxSearch.Location = new System.Drawing.Point(466, 17);
+            this.textBoxSearch.Name = "textBoxSearch";
+            this.textBoxSearch.Size = new System.Drawing.Size(287, 26);
+            this.textBoxSearch.TabIndex = 3;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label1.ForeColor = System.Drawing.SystemColors.Control;
+            this.label1.Location = new System.Drawing.Point(389, 20);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(71, 20);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "Keresés:";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.Desktop;
             this.ClientSize = new System.Drawing.Size(918, 588);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.textBoxSearch);
             this.Controls.Add(this.buttonaddcontact);
             this.Controls.Add(this.buttonorders);
             this.Controls.Add(this.dataGridView1);
@@ -140,6 +189,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.addressDTOBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ugyfelBindingSource)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -150,13 +200,17 @@
         private System.Windows.Forms.Button buttonorders;
         private System.Windows.Forms.DataGridViewTextBoxColumn varosDataGridViewTextBoxColumn;
         private System.Windows.Forms.BindingSource ugyfelBindingSource;
+        private System.Windows.Forms.Button buttonaddcontact;
         private System.Windows.Forms.DataGridViewTextBoxColumn azonositoDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn vezeteknevDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn keresztnevDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn emailDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn telepulesDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn cimDataGridViewTextBoxColumn;
-        private System.Windows.Forms.Button buttonaddcontact;
+        private System.Windows.Forms.DataGridViewLinkColumn Szerkesztes;
+        private System.Windows.Forms.DataGridViewLinkColumn delete;
+        private System.Windows.Forms.TextBox textBoxSearch;
+        private System.Windows.Forms.Label label1;
     }
 }
 
