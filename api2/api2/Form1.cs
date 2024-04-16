@@ -73,10 +73,10 @@ namespace api2
             Form3 addform = new Form3();
             if (addform.ShowDialog() == DialogResult.OK)
             {
-                string url = "http://20.234.113.211:8109";
-                string key = "1-a284d681-f356-4b49-a347-eb274e0217e8";
+                //string url = "http://20.234.113.211:8109";
+                //string key = "1-a284d681-f356-4b49-a347-eb274e0217e8";
 
-                Api proxy = new Api(url, key);
+                //Api proxy = new Api(url, key);
 
                 // create a new instance of customer account
                 var customerAccount = new CustomerAccountDTO();
@@ -91,7 +91,7 @@ namespace api2
                 // call the API to create the account
                 try
                 {
-                    ApiResponse<CustomerAccountDTO> response = proxy.CustomerAccountsCreate(customerAccount);
+                    ApiResponse<CustomerAccountDTO> response = apihivas().CustomerAccountsCreate(customerAccount);
                 }
                 catch (Exception ex)
                 {
@@ -112,7 +112,7 @@ namespace api2
                 Form3 editform = new Form3();
                 editform.LoadContact(new ugyfel
                 {
-
+                    //a form kitölti a mezőket a meglévő adatokkal
                     azonosito = int.Parse((dataGridView1.Rows[e.RowIndex].Cells[0]).Value.ToString()),
                     vezeteknev = dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString(),
                     keresztnev = dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString(),
@@ -125,17 +125,25 @@ namespace api2
                 {
 
                     
-                    string customerID = dataGridView1.Rows[e.RowIndex].Cells[0].ToString();
+                    string customerID = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
 
                     ApiResponse<CustomerAccountDTO> customerResponse = apihivas().CustomerAccountsFind(customerID);
-                   
+
                     customerResponse.Content.LastName = editform.textBoxLast.Text;
                     customerResponse.Content.FirstName = editform.textBoxFirst.Text;
                     customerResponse.Content.Email = editform.textBoxEmail.Text;
                     customerResponse.Content.BillingAddress.Line1 = editform.textBoxAddress.Text;
                     customerResponse.Content.BillingAddress.City = editform.textBoxCity.Text;
 
-                    ApiResponse<CustomerAccountDTO> response = apihivas().CustomerAccountsUpdate(customerResponse.Content);
+                    try
+                    {
+                        ApiResponse<CustomerAccountDTO> response = apihivas().CustomerAccountsUpdate(customerResponse.Content);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                    //ApiResponse<CustomerAccountDTO> response = apihivas().CustomerAccountsUpdate(customerResponse.Content);
 
                     apiadatlekeres();
                 }
