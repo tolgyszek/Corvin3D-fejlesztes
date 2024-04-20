@@ -25,19 +25,15 @@ namespace api2
             apiadatlekeres();
 
         }
-        void apiadatlekeres()
+        void apiadatlekeres(string searchText = null)
         {
             Api proxy = apihivas();
 
             // call the API to find all customer accounts in the store
             ApiResponse<List<CustomerAccountDTO>> response = proxy.CustomerAccountsFindAll();
-            //MessageBox.Show(response.Content[0].FirstName.ToString());
-            //dataGridView1.DataSource = response.Content;
+            
             addressDTOBindingSource.DataSource = response.Content;
-            ////for (int i = 0; i < response.Content.Count; i++)
-            //{
-            //    MessageBox.Show(response.Content[i].ShippingAddress.City);
-            //}
+            
 
             //adatok betöltése linq-val
             var adat = from x in response.Content
@@ -49,8 +45,7 @@ namespace api2
                            keresztnev = x.FirstName.ToString(),
                            telepules = x.BillingAddress.City.ToString(),
                            cim = x.BillingAddress.Line1.ToString(),
-
-                       };
+                       };                      
             ugyfelBindingSource.DataSource = adat.ToList();
 
         }
@@ -203,6 +198,27 @@ namespace api2
                 }
             }
             
+        }
+
+        private void buttonSearch_Click(object sender, EventArgs e)
+        {
+            Api proxy = apihivas();
+
+            ApiResponse<List<CustomerAccountDTO>> response = proxy.CustomerAccountsFindAll();
+
+            addressDTOBindingSource.DataSource = response.Content;
+            var adat = from x in response.Content
+                       where x.LastName.Contains(textBoxSearch.Text)
+                       select new ugyfel
+                       {
+                           azonosito = int.Parse(x.Bvin),
+                           email = x.Email.ToString(),
+                           vezeteknev = x.LastName.ToString(),
+                           keresztnev = x.FirstName.ToString(),
+                           telepules = x.BillingAddress.City.ToString(),
+                           cim = x.BillingAddress.Line1.ToString(),
+                       };
+            ugyfelBindingSource.DataSource = adat.ToList();
         }
     }
 }

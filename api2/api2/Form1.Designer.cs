@@ -30,23 +30,24 @@
         {
             this.components = new System.ComponentModel.Container();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.ugyfelBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.addressDTOBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.buttonorders = new System.Windows.Forms.Button();
             this.buttonaddcontact = new System.Windows.Forms.Button();
             this.textBoxSearch = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.Szerkesztes = new System.Windows.Forms.DataGridViewLinkColumn();
+            this.delete = new System.Windows.Forms.DataGridViewLinkColumn();
             this.azonositoDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.vezeteknevDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.keresztnevDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.emailDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.telepulesDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cimDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Szerkesztes = new System.Windows.Forms.DataGridViewLinkColumn();
-            this.delete = new System.Windows.Forms.DataGridViewLinkColumn();
+            this.ugyfelBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.buttonSearch = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ugyfelBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.addressDTOBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ugyfelBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // dataGridView1
@@ -70,10 +71,6 @@
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
-            // ugyfelBindingSource
-            // 
-            this.ugyfelBindingSource.DataSource = typeof(api2.ugyfel);
-            // 
             // addressDTOBindingSource
             // 
             this.addressDTOBindingSource.DataSource = typeof(Hotcakes.CommerceDTO.v1.Contacts.AddressDTO);
@@ -93,7 +90,7 @@
             this.buttonaddcontact.BackColor = System.Drawing.Color.MediumPurple;
             this.buttonaddcontact.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.buttonaddcontact.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.buttonaddcontact.Location = new System.Drawing.Point(759, 12);
+            this.buttonaddcontact.Location = new System.Drawing.Point(809, 12);
             this.buttonaddcontact.Name = "buttonaddcontact";
             this.buttonaddcontact.Size = new System.Drawing.Size(97, 36);
             this.buttonaddcontact.TabIndex = 2;
@@ -104,7 +101,7 @@
             // textBoxSearch
             // 
             this.textBoxSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.textBoxSearch.Location = new System.Drawing.Point(466, 17);
+            this.textBoxSearch.Location = new System.Drawing.Point(424, 17);
             this.textBoxSearch.Name = "textBoxSearch";
             this.textBoxSearch.Size = new System.Drawing.Size(287, 26);
             this.textBoxSearch.TabIndex = 3;
@@ -114,11 +111,29 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.label1.ForeColor = System.Drawing.SystemColors.Control;
-            this.label1.Location = new System.Drawing.Point(389, 20);
+            this.label1.Location = new System.Drawing.Point(347, 20);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(71, 20);
             this.label1.TabIndex = 4;
             this.label1.Text = "Keresés:";
+            // 
+            // Szerkesztes
+            // 
+            this.Szerkesztes.HeaderText = "Szerkesztés";
+            this.Szerkesztes.Name = "Szerkesztes";
+            this.Szerkesztes.ReadOnly = true;
+            this.Szerkesztes.Text = "Szerkesztés";
+            this.Szerkesztes.UseColumnTextForLinkValue = true;
+            // 
+            // delete
+            // 
+            this.delete.HeaderText = "Törlés";
+            this.delete.Name = "delete";
+            this.delete.ReadOnly = true;
+            this.delete.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.delete.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.delete.Text = "Törlés";
+            this.delete.UseColumnTextForLinkValue = true;
             // 
             // azonositoDataGridViewTextBoxColumn
             // 
@@ -156,23 +171,19 @@
             this.cimDataGridViewTextBoxColumn.HeaderText = "cim";
             this.cimDataGridViewTextBoxColumn.Name = "cimDataGridViewTextBoxColumn";
             // 
-            // Szerkesztes
+            // ugyfelBindingSource
             // 
-            this.Szerkesztes.HeaderText = "Szerkesztés";
-            this.Szerkesztes.Name = "Szerkesztes";
-            this.Szerkesztes.ReadOnly = true;
-            this.Szerkesztes.Text = "Szerkesztés";
-            this.Szerkesztes.UseColumnTextForLinkValue = true;
+            this.ugyfelBindingSource.DataSource = typeof(api2.ugyfel);
             // 
-            // delete
+            // buttonSearch
             // 
-            this.delete.HeaderText = "Törlés";
-            this.delete.Name = "delete";
-            this.delete.ReadOnly = true;
-            this.delete.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.delete.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.delete.Text = "Törlés";
-            this.delete.UseColumnTextForLinkValue = true;
+            this.buttonSearch.Location = new System.Drawing.Point(717, 12);
+            this.buttonSearch.Name = "buttonSearch";
+            this.buttonSearch.Size = new System.Drawing.Size(86, 36);
+            this.buttonSearch.TabIndex = 5;
+            this.buttonSearch.Text = "Keresés";
+            this.buttonSearch.UseVisualStyleBackColor = true;
+            this.buttonSearch.Click += new System.EventHandler(this.buttonSearch_Click);
             // 
             // Form1
             // 
@@ -180,6 +191,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Desktop;
             this.ClientSize = new System.Drawing.Size(918, 588);
+            this.Controls.Add(this.buttonSearch);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBoxSearch);
             this.Controls.Add(this.buttonaddcontact);
@@ -188,8 +200,8 @@
             this.Name = "Form1";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ugyfelBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.addressDTOBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ugyfelBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -213,6 +225,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn cimDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewLinkColumn Szerkesztes;
         private System.Windows.Forms.DataGridViewLinkColumn delete;
+        private System.Windows.Forms.Button buttonSearch;
     }
 }
 
