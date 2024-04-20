@@ -97,6 +97,8 @@
             this.textBoxLast.Name = "textBoxLast";
             this.textBoxLast.Size = new System.Drawing.Size(160, 20);
             this.textBoxLast.TabIndex = 7;
+            this.textBoxLast.Validating += new System.ComponentModel.CancelEventHandler(this.textBoxLast_Validating);
+            this.textBoxLast.Validated += new System.EventHandler(this.textBoxLast_Validated);
             // 
             // textBoxFirst
             // 
@@ -104,6 +106,8 @@
             this.textBoxFirst.Name = "textBoxFirst";
             this.textBoxFirst.Size = new System.Drawing.Size(160, 20);
             this.textBoxFirst.TabIndex = 8;
+            this.textBoxFirst.Validating += new System.ComponentModel.CancelEventHandler(this.textBoxFirst_Validating);
+            this.textBoxFirst.Validated += new System.EventHandler(this.textBoxFirst_Validated);
             // 
             // textBoxEmail
             // 
@@ -111,6 +115,8 @@
             this.textBoxEmail.Name = "textBoxEmail";
             this.textBoxEmail.Size = new System.Drawing.Size(160, 20);
             this.textBoxEmail.TabIndex = 9;
+            this.textBoxEmail.Validating += new System.ComponentModel.CancelEventHandler(this.textBoxEmail_Validating);
+            this.textBoxEmail.Validated += new System.EventHandler(this.textBoxEmail_Validated);
             // 
             // textBoxAddress
             // 

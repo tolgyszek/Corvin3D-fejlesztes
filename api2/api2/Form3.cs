@@ -58,5 +58,46 @@ namespace api2
             textBoxAddress.Text = string.Empty;
         }
 
+        private void textBoxLast_Validating(object sender, CancelEventArgs e)
+        {
+            if (string.IsNullOrEmpty(textBoxLast.Text))
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(textBoxLast, "A mező nem lehet üres!");
+            }
+        }
+
+        private void textBoxLast_Validated(object sender, EventArgs e)
+        {
+            errorProvider1.SetError(textBoxLast, string.Empty);
+        }
+
+        private void textBoxFirst_Validating(object sender, CancelEventArgs e)
+        {
+            if (string.IsNullOrEmpty(textBoxFirst.Text))
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(textBoxFirst, "A mező nem lehet üres!");
+            }
+        }
+
+        private void textBoxFirst_Validated(object sender, EventArgs e)
+        {
+            errorProvider1.SetError(textBoxFirst, string.Empty);
+        }
+
+        private void textBoxEmail_Validating(object sender, CancelEventArgs e)
+        {
+            if (!textBoxEmail.Text.Contains("@") || !textBoxEmail.Text.Contains("."))
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(textBoxEmail, "Adjon meg egy érvényes email címet!");
+            }
+        }
+
+        private void textBoxEmail_Validated(object sender, EventArgs e)
+        {
+            errorProvider1.SetError(textBoxEmail, string.Empty);
+        }
     }
 }
