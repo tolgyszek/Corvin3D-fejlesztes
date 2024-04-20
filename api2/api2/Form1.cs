@@ -2,12 +2,14 @@
 using Hotcakes.CommerceDTO.v1.Client;
 using Hotcakes.CommerceDTO.v1.Contacts;
 using Hotcakes.CommerceDTO.v1.Membership;
+using Hotcakes.CommerceDTO.v1.Orders;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.ExceptionServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -178,8 +180,7 @@ namespace api2
                 else
                 {
                     return;  
-                }
-                
+                }               
                 apiadatlekeres();
             }
         }
@@ -187,13 +188,21 @@ namespace api2
         private void DeleteContact(DataGridViewCellEventArgs e)
         {
             string customerID = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
+            ApiResponse<List<OrderSnapshotDTO>> orders = apihivas().OrdersFindAll();
 
-            if (true)
+            for (int i = 0; i < orders.Content.Count; i++)
             {
-
+                if (orders.Content[i].UserID != customerID)
+                {
+                    ApiResponse<bool> response = apihivas().CustomerAccountsDelete(customerID);
+                }
+                else
+                {
+                    MessageBox.Show("A felhasználó nem törölhető, mert van rendelése");
+                    return;
+                }
             }
-            ApiResponse<bool> response = apihivas().CustomerAccountsDelete(customerID);
-
+            
         }
     }
 }
