@@ -73,13 +73,8 @@ namespace api2
             Form3 addform = new Form3();
             if (addform.ShowDialog() == DialogResult.OK)
             {
-                //string url = "http://20.234.113.211:8109";
-                //string key = "1-a284d681-f356-4b49-a347-eb274e0217e8";
-
-                //Api proxy = new Api(url, key);
-
-                // create a new instance of customer account
                 var customerAccount = new CustomerAccountDTO();
+                var password = string.Concat(addform.textBoxFirst.Text, addform.textBoxLast.Text);
 
                 // populate the customer account with minimum details
                 customerAccount.FirstName = addform.textBoxFirst.Text;
@@ -87,18 +82,27 @@ namespace api2
                 customerAccount.Email = addform.textBoxEmail.Text;
                 customerAccount.BillingAddress.City = addform.textBoxCity.Text;
                 customerAccount.BillingAddress.Line1 = addform.textBoxAddress.Text;
+                customerAccount.Password = password;
 
-                // call the API to create the account
-                try
+                DialogResult dialogResult = MessageBox.Show("Biztos rögzíti ezt a felhasználót?", "Megerősítés", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
                 {
-                    ApiResponse<CustomerAccountDTO> response = apihivas().CustomerAccountsCreate(customerAccount);
+                    // call the API to create the account
+                    try
+                    {
+                        ApiResponse<CustomerAccountDTO> response = apihivas().CustomerAccountsCreateWithPassword(customerAccount, password);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+
+                    apiadatlekeres();
                 }
-                catch (Exception ex)
+                else
                 {
-                    MessageBox.Show(ex.Message);
-                }
-                
-                apiadatlekeres();
+                    return; 
+                }         
             }
 
         }
@@ -109,34 +113,58 @@ namespace api2
 
             if (cell.Value.ToString() == "Szerkesztés")
             {
-                Form3 editform = new Form3();
-                editform.LoadContact(new ugyfel
+                EditContact(e);
+                apiadatlekeres();
+            }
+            else if (cell.Value.ToString() == "Törlés")
+            {
+                DialogResult dialogResult = MessageBox.Show("Biztos törli ezt a felhasználót?", "Megerősítés", MessageBoxButtons.YesNo);
+
+                if (dialogResult == DialogResult.Yes)
                 {
-                    //a form kitölti a mezőket a meglévő adatokkal
-                    azonosito = int.Parse((dataGridView1.Rows[e.RowIndex].Cells[0]).Value.ToString()),
-                    vezeteknev = dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString(),
-                    keresztnev = dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString(),
-                    email = dataGridView1.Rows[e.RowIndex].Cells[3].Value.ToString(),
-                    telepules = dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString(),
-                    cim = dataGridView1.Rows[e.RowIndex].Cells[5].Value.ToString(),
-
-                });
-                if (editform.ShowDialog() == DialogResult.OK)
+                    DeleteContact(e);
+                    apiadatlekeres();
+                }
+                else
                 {
+                    return; 
+                }
+            }
+        }
 
-                    //szerkesztett ügyfél azonosítójának mentése
-                    string customerID = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
+        private void EditContact(DataGridViewCellEventArgs e)
+        {
+            Form3 editform = new Form3();
+            editform.LoadContact(new ugyfel
+            {
+                //a form kitölti a mezőket a meglévő adatokkal
+                azonosito = int.Parse((dataGridView1.Rows[e.RowIndex].Cells[0]).Value.ToString()),
+                vezeteknev = dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString(),
+                keresztnev = dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString(),
+                email = dataGridView1.Rows[e.RowIndex].Cells[3].Value.ToString(),
+                telepules = dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString(),
+                cim = dataGridView1.Rows[e.RowIndex].Cells[5].Value.ToString(),
 
-                    //ügyfélszerkesztő API endpoint hívása
-                    ApiResponse<CustomerAccountDTO> customerResponse = apihivas().CustomerAccountsFind(customerID);
+            });
+            if (editform.ShowDialog() == DialogResult.OK)
+            {
 
-                    //Ügyfél adatainak szerkesztése a szerkesztő form-on megadott adatokkal
-                    customerResponse.Content.LastName = editform.textBoxLast.Text;
-                    customerResponse.Content.FirstName = editform.textBoxFirst.Text;
-                    customerResponse.Content.Email = editform.textBoxEmail.Text;
-                    customerResponse.Content.BillingAddress.Line1 = editform.textBoxAddress.Text;
-                    customerResponse.Content.BillingAddress.City = editform.textBoxCity.Text;
+                //szerkesztett ügyfél azonosítójának mentése
+                string customerID = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
 
+                //ügyfélszerkesztő API endpoint hívása
+                ApiResponse<CustomerAccountDTO> customerResponse = apihivas().CustomerAccountsFind(customerID);
+
+                //Ügyfél adatainak szerkesztése a szerkesztő form-on megadott adatokkal
+                customerResponse.Content.LastName = editform.textBoxLast.Text;
+                customerResponse.Content.FirstName = editform.textBoxFirst.Text;
+                customerResponse.Content.Email = editform.textBoxEmail.Text;
+                customerResponse.Content.BillingAddress.Line1 = editform.textBoxAddress.Text;
+                customerResponse.Content.BillingAddress.City = editform.textBoxCity.Text;
+
+                DialogResult dialogResult = MessageBox.Show("Biztos módosítja ezeket az adatokat?", "Megerősítés", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
+                {
                     //mentés
                     try
                     {
@@ -146,11 +174,26 @@ namespace api2
                     {
                         MessageBox.Show(ex.Message);
                     }
-                    //ApiResponse<CustomerAccountDTO> response = apihivas().CustomerAccountsUpdate(customerResponse.Content);
-
-                    apiadatlekeres();
                 }
+                else
+                {
+                    return;  
+                }
+                
+                apiadatlekeres();
             }
+        }
+
+        private void DeleteContact(DataGridViewCellEventArgs e)
+        {
+            string customerID = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
+
+            if (true)
+            {
+
+            }
+            ApiResponse<bool> response = apihivas().CustomerAccountsDelete(customerID);
+
         }
     }
 }
