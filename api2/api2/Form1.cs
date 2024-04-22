@@ -74,6 +74,7 @@ namespace api2
                 var password = string.Concat(addform.textBoxFirst.Text, addform.textBoxLast.Text);
 
                 // populate the customer account with minimum details
+                
                 customerAccount.FirstName = addform.textBoxFirst.Text;
                 customerAccount.LastName = addform.textBoxLast.Text;
                 customerAccount.Email = addform.textBoxEmail.Text;
@@ -184,18 +185,30 @@ namespace api2
         {
             string customerID = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
             ApiResponse<List<OrderSnapshotDTO>> orders = apihivas().OrdersFindAll();
-
+            bool vanE = false;
             for (int i = 0; i < orders.Content.Count; i++)
             {
                 if (orders.Content[i].UserID != customerID)
                 {
-                    ApiResponse<bool> response = apihivas().CustomerAccountsDelete(customerID);
+                    
                 }
                 else
-                {
-                    MessageBox.Show("A felhasználó nem törölhető, mert van rendelése");
-                    return;
+                {                  
+                    vanE = true;
+                    break;
                 }
+
+            }
+            if (vanE)
+            {
+                MessageBox.Show("A felhasználó nem törölhető, mert van rendelése");
+                return;
+            }
+            else
+            {
+                ApiResponse<bool> response = apihivas().CustomerAccountsDelete(customerID);
+                MessageBox.Show("A felhasználó sikeresen törölve");
+                return;
             }
             
         }
