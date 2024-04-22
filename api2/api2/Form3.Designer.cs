@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -41,6 +42,8 @@
             this.buttonOK = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.buttonCancel = new System.Windows.Forms.Button();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
             // label2
@@ -94,6 +97,8 @@
             this.textBoxLast.Name = "textBoxLast";
             this.textBoxLast.Size = new System.Drawing.Size(160, 20);
             this.textBoxLast.TabIndex = 7;
+            this.textBoxLast.Validating += new System.ComponentModel.CancelEventHandler(this.textBoxLast_Validating);
+            this.textBoxLast.Validated += new System.EventHandler(this.textBoxLast_Validated);
             // 
             // textBoxFirst
             // 
@@ -101,6 +106,8 @@
             this.textBoxFirst.Name = "textBoxFirst";
             this.textBoxFirst.Size = new System.Drawing.Size(160, 20);
             this.textBoxFirst.TabIndex = 8;
+            this.textBoxFirst.Validating += new System.ComponentModel.CancelEventHandler(this.textBoxFirst_Validating);
+            this.textBoxFirst.Validated += new System.EventHandler(this.textBoxFirst_Validated);
             // 
             // textBoxEmail
             // 
@@ -108,6 +115,8 @@
             this.textBoxEmail.Name = "textBoxEmail";
             this.textBoxEmail.Size = new System.Drawing.Size(160, 20);
             this.textBoxEmail.TabIndex = 9;
+            this.textBoxEmail.Validating += new System.ComponentModel.CancelEventHandler(this.textBoxEmail_Validating);
+            this.textBoxEmail.Validated += new System.EventHandler(this.textBoxEmail_Validated);
             // 
             // textBoxAddress
             // 
@@ -136,11 +145,12 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(114, 21);
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label1.Location = new System.Drawing.Point(113, 23);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(51, 13);
+            this.label1.Size = new System.Drawing.Size(125, 20);
             this.label1.TabIndex = 13;
-            this.label1.Text = "Új ügyfél:";
+            this.label1.Text = "Ügyfél adatok:";
             // 
             // buttonCancel
             // 
@@ -152,6 +162,11 @@
             this.buttonCancel.Text = "Mégse";
             this.buttonCancel.UseVisualStyleBackColor = true;
             this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
+            // 
+            // errorProvider1
+            // 
+            this.errorProvider1.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.errorProvider1.ContainerControl = this;
             // 
             // Form3
             // 
@@ -173,6 +188,7 @@
             this.Controls.Add(this.label2);
             this.Name = "Form3";
             this.Text = "Form3";
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -192,5 +208,6 @@
         private System.Windows.Forms.Button buttonOK;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button buttonCancel;
+        private System.Windows.Forms.ErrorProvider errorProvider1;
     }
 }
