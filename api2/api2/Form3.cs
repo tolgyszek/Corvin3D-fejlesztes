@@ -16,13 +16,13 @@ namespace api2
 {
     public partial class Form3 : Form
     {
-        private ugyfel _u;
+        public ugyfel _u;
         public Form3()
         {
             InitializeComponent();
         }
 
-        private void buttonOK_Click(object sender, EventArgs e)
+        public void buttonOK_Click(object sender, EventArgs e)
         {
             if (this.ValidateChildren())
             {
@@ -30,7 +30,7 @@ namespace api2
             }
         }
 
-        private void buttonCancel_Click(object sender, EventArgs e)
+        public void buttonCancel_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
         }
@@ -49,7 +49,7 @@ namespace api2
                 textBoxAddress.Text = u.cim;
             }
         }
-        private void ClearForm() 
+        public void ClearForm() 
         {
             textBoxLast.Text = string.Empty;
             textBoxFirst.Text = string.Empty;
@@ -58,7 +58,7 @@ namespace api2
             textBoxAddress.Text = string.Empty;
         }
 
-        private void textBoxLast_Validating(object sender, CancelEventArgs e)
+        public void textBoxLast_Validating(object sender, CancelEventArgs e)
         {
             if (string.IsNullOrEmpty(textBoxLast.Text))
             {
@@ -67,12 +67,12 @@ namespace api2
             }
         }
 
-        private void textBoxLast_Validated(object sender, EventArgs e)
+        public void textBoxLast_Validated(object sender, EventArgs e)
         {
             errorProvider1.SetError(textBoxLast, string.Empty);
         }
 
-        private void textBoxFirst_Validating(object sender, CancelEventArgs e)
+        public void textBoxFirst_Validating(object sender, CancelEventArgs e)
         {
             if (string.IsNullOrEmpty(textBoxFirst.Text))
             {
@@ -81,12 +81,12 @@ namespace api2
             }
         }
 
-        private void textBoxFirst_Validated(object sender, EventArgs e)
+        public void textBoxFirst_Validated(object sender, EventArgs e)
         {
             errorProvider1.SetError(textBoxFirst, string.Empty);
         }
 
-        private void textBoxEmail_Validating(object sender, CancelEventArgs e)
+        public void textBoxEmail_Validating(object sender, CancelEventArgs e)
         {
             if (!textBoxEmail.Text.Contains("@") || !textBoxEmail.Text.Contains("."))
             {
@@ -95,7 +95,7 @@ namespace api2
             }
         }
 
-        private void textBoxEmail_Validated(object sender, EventArgs e)
+        public void textBoxEmail_Validated(object sender, EventArgs e)
         {
             errorProvider1.SetError(textBoxEmail, string.Empty);
         }
