@@ -12,6 +12,7 @@ using Hotcakes.CommerceDTO.v1.Orders;
 using System.Windows.Forms;
 using System.Data;
 using System.Linq;
+using System;
 
 namespace UnitTest.Test
 {
@@ -208,5 +209,69 @@ namespace UnitTest.Test
             // Ha az összes ügyfél megfelel a szűrésnek, akkor a DataGridView frissült
             ClassicAssert.AreEqual(filteredCustomers.Count, _form1.dataGridView1.RowCount);
         }
+        /*
+        [Test]
+        public void Test_DeleteContact_ShouldDisplayMessage_WhenUserHasOrders()
+        {
+            // Arrange
+            DataGridViewCellEventArgs args = new DataGridViewCellEventArgs(0, 0);
+
+            // Mivel az `apihivas` egy proxyt hoz létre, amelyet nem lehet ellenőrizni
+            // a tesztben, ajánlott lenne ezt a funkciót felcserélni egy interfész használatára, 
+            // amelynek a létrehozása könnyebben tesztelhető lenne.
+            // Itt az eredeti API-t simuláló mock API-t használunk a teszteléshez.
+
+            var mockApi = new Mock<Api>(MockBehavior.Strict);
+
+            // Az API hívásokat megfelelő válaszokkal ellátjuk
+
+            mockApi.Setup(x => x.OrdersFindAll()).Returns(new ApiResponse<List<OrderSnapshotDTO>>
+            {
+                Content = new List<OrderSnapshotDTO>
+                {
+                    new OrderSnapshotDTO { UserID = "123" },  // Tesztelés céljából adjunk hozzá egy rendelést
+                    new OrderSnapshotDTO { UserID = "456" }
+                }
+            });
+
+            // API-hívás cseréje a mockApi-val
+
+            _form1.apihivas = () => mockApi.Object;
+
+            // Act
+            _form1.DeleteContact(args);
+
+            // Assert
+            ClassicAssert.AreEqual("A felhasználó nem törölhető, mert van rendelése", _form1.MessageBoxText);
+        }
+
+        [Test]
+        public void Test_DeleteContact_ShouldCallApiToDeleteUser_WhenUserHasNoOrders()
+        {
+            // Arrange
+            DataGridViewCellEventArgs args = new DataGridViewCellEventArgs(0, 0);
+
+            var mockApi = new Mock<Api>(MockBehavior.Strict);
+
+            mockApi.Setup(x => x.OrdersFindAll()).Returns(new ApiResponse<List<OrderSnapshotDTO>>
+            {
+                Content = new List<OrderSnapshotDTO>
+                {
+                    new OrderSnapshotDTO { UserID = "456" }  // A felhasználónak nincsenek rendelései
+                }
+            });
+
+            mockApi.Setup(x => x.CustomerAccountsDelete(It.IsAny<string>()))
+                .Returns(new ApiResponse<bool> { Content = true });
+
+            _form1.apihivas = () => mockApi.Object;
+
+            // Act
+            _form1.DeleteContact(args);
+
+            // Assert
+            mockApi.Verify(x => x.CustomerAccountsDelete(It.IsAny<string>()), Times.Once);
+            ClassicAssert.AreEqual("A felhasználó sikeresen törölve", _form1.MessageBoxText);
+        }*/
     }
 }
