@@ -25,7 +25,7 @@ namespace api2
             apiadatlekeres();
 
         }
-        void apiadatlekeres(string searchText = null)
+        public void apiadatlekeres(string searchText = null)
         {
             Api proxy = apihivas();
 
@@ -50,7 +50,7 @@ namespace api2
 
         }
 
-        private static Api apihivas()
+        public static Api apihivas()
         {
             string url = "http://20.234.113.211:8109";
             string key = "1-a284d681-f356-4b49-a347-eb274e0217e8";
@@ -59,13 +59,13 @@ namespace api2
             return proxy;
         }
 
-        private void buttonorders_Click(object sender, EventArgs e)
+        public void buttonorders_Click(object sender, EventArgs e)
         {
             Form2 form2 = new Form2();
             form2.ShowDialog();
         }
 
-        private void buttonaddcontact_Click(object sender, EventArgs e)
+        public void buttonaddcontact_Click(object sender, EventArgs e)
         {
             Form3 addform = new Form3();
             if (addform.ShowDialog() == DialogResult.OK)
@@ -104,7 +104,7 @@ namespace api2
 
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        public void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             DataGridViewLinkCell cell = (DataGridViewLinkCell)dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex];
 
@@ -129,7 +129,7 @@ namespace api2
             }
         }
 
-        private void EditContact(DataGridViewCellEventArgs e)
+        public void EditContact(DataGridViewCellEventArgs e)
         {
             Form3 editform = new Form3();
             editform.LoadContact(new ugyfel
@@ -180,7 +180,7 @@ namespace api2
             }
         }
 
-        private void DeleteContact(DataGridViewCellEventArgs e)
+        public void DeleteContact(DataGridViewCellEventArgs e)
         {
             string customerID = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
             ApiResponse<List<OrderSnapshotDTO>> orders = apihivas().OrdersFindAll();
@@ -200,7 +200,7 @@ namespace api2
             
         }
 
-        private void buttonSearch_Click(object sender, EventArgs e)
+        public void buttonSearch_Click(object sender, EventArgs e)
         {
             Api proxy = apihivas();
 

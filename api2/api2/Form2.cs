@@ -21,7 +21,7 @@ namespace api2
             orderapi();           
         }
 
-        private void orderapi()
+        public void orderapi()
         {
             string url = "http://20.234.113.211:8109";
             string key = "1-a284d681-f356-4b49-a347-eb274e0217e8";

@@ -199,13 +199,11 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.BindingSource addressDTOBindingSource;
         private System.Windows.Forms.DataGridViewTextBoxColumn varosDataGridViewTextBoxColumn;
-        private System.Windows.Forms.BindingSource ugyfelBindingSource;
+        public System.Windows.Forms.BindingSource ugyfelBindingSource;
         private System.Windows.Forms.Button buttonaddcontact;
-        private System.Windows.Forms.TextBox textBoxSearch;
+        public System.Windows.Forms.TextBox textBoxSearch;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DataGridViewTextBoxColumn azonositoDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn vezeteknevDataGridViewTextBoxColumn;
@@ -216,6 +214,7 @@
         private System.Windows.Forms.DataGridViewLinkColumn Szerkesztes;
         private System.Windows.Forms.DataGridViewLinkColumn delete;
         private System.Windows.Forms.Button buttonSearch;
+        public System.Windows.Forms.DataGridView dataGridView1;
     }
 }
 
